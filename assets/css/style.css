@@ -1,0 +1,23 @@
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+body,html{
+    height: 100%;
+    background:#ddd;
+}
+.container{
+    max-width: 1280px;
+    padding:0 2%;
+    margin :0 auto;
+}
+.wn{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%)
+}
+.wn canvas{
+    border:5px solid #aaa;
+}
