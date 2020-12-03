@@ -2,6 +2,8 @@
     padding:0;
     margin:0;
     box-sizing: border-box;
+    font-family: sans-serif;
+    font-weight: 500;
 }
 body,html{
     height: 100%;
@@ -11,6 +13,7 @@ body,html{
     max-width: 1280px;
     padding:0 2%;
     margin :0 auto;
+    max-height: 100vh;
 }
 .wn{
     position: absolute;
@@ -21,3 +24,21 @@ body,html{
 .wn canvas{
     border:5px solid #aaa;
 }
+
+.infoScore{
+    position: absolute;
+    left: 30px;
+    max-width: 180px;
+    background-color: #e67300;
+    padding: 10px 2%;
+    color: #eee;
+}
+.infoHighScore{
+    position: absolute;
+    right: 30px;
+    max-width: 180px;
+    background-color: #e67300;
+    padding: 10px 2%;
+    color: #eee;
+}
+
