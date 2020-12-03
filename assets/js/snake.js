@@ -4,15 +4,15 @@ const HEIGTH =  window.innerWidth > 768 ? window.innerHeight - 50 : window.inner
 const WIDTH = window.innerWidth > 768 ? window.innerWidth - 400 : window.innerWidth - 50
 const scoreHtml = document.querySelector('#score')
 const HighscoreHtml = document.querySelector('#highscore')
-let Highscore
+let Highscore = localStorage.getItem("@SnakeGame-HighScore")
 let direction
 
 // game functions
 
 const UpdateScore = (NewScore)=>{
     scoreHtml.innerText = `score ${NewScore}`
-    if(NewScore > Highscore){
-        localStorage.setItem("@SnakeGame-HighScore",NewScore.toString())
+    if(NewScore > Number(Highscore)){
+        localStorage.setItem("@SnakeGame-HighScore",NewScore)
         HighscoreHtml.innerHTML=`highscore ${NewScore}`
     }else{
         HighscoreHtml.innerHTML=`highscore ${Highscore}`
