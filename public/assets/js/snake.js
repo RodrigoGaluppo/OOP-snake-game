@@ -162,6 +162,7 @@ class Game{
             
             while(this.snake.trail.length > this.snake.tail ){
                 this.snake.trail.shift()
+                UpdateScore("0")
             }
         }
 
