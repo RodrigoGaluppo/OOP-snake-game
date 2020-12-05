@@ -1,7 +1,30 @@
 
 // Base Variables and Consts
-const HEIGTH =  window.innerWidth > 768 ? window.innerHeight - 50 : window.innerHeight - 100
-const WIDTH = window.innerWidth > 768 ? window.innerWidth - 400 : window.innerWidth - 50
+// ResponsibleHeigth
+let HEIGTH =  window.innerHeight - 50
+if(window.innerWidth > 768){
+     HEIGTH =  window.innerHeight - 50 
+}else if(window.innerWidth > 550){
+     HEIGTH =  window.innerHeight - 100
+}else{
+     HEIGTH = window.innerHeight < 500 ? window.innerHeight - 200 : window.innerHeight - 300
+}
+
+let WIDTH =  window.innerWidth - 400
+if(window.innerWidth > 768){
+    WIDTH =  window.innerWidth - 400 
+}else if(window.innerWidth > 550){
+    WIDTH =  window.innerWidth - 50
+}else{
+    WIDTH =  window.innerWidth - 30
+}
+
+const All = document.querySelector('body')
+const buttonUp = document.querySelector('#up')
+const buttonDown = document.querySelector('#down')
+const buttonLeft = document.querySelector('#left')
+const buttonRight = document.querySelector('#right')
+
 const scoreHtml = document.querySelector('#score')
 const HighscoreHtml = document.querySelector('#highscore')
 let Highscore = localStorage.getItem("@SnakeGame-HighScore")
@@ -34,8 +57,8 @@ class Display{
         this.ctx = this.stage.getContext('2d')
 
         // length of the piece
-        this.lp = 20
-
+        this.lp = WIDTH > 960 ? 30 : 20 
+        this.lp = WIDTH < 550 ? 17 : this.lp
         //  quantity of pieces
         this.qp = 20
 
@@ -164,54 +187,74 @@ class Game{
         
 }
 
-let game = new Game()
+const game = new Game()
 
 window.onload = ()=>{
     Highscore = !!(localStorage.getItem("@SnakeGame-HighScore")) ? localStorage.getItem("@SnakeGame-HighScore") : "0"
 
-    UpdateScore(game.snake.trail.length.toString())   
-    let keyPush = (e)=>{
+    UpdateScore(game.snake.trail.length.toString()) 
+
+    const MoveRight = ()=>{
+        if(!(direction == "left")) {
+            game.snake.vx =  game.snake.vel
+            game.snake.vy = 0 
+        }
+        direction = "right"
+    }
+    const MoveLeft = ()=>{
+        if(!(direction == "right")) {
+            game.snake.vx = - game.snake.vel
+            game.snake.vy = 0
+            
+        }
+        direction = "left"
+    }
+
+    const MoveUp = ()=>{
+        if(!(direction == "down")){
+            game.snake.vx = 0
+            game.snake.vy = - game.snake.vel
+        }
+        direction = "up"
+    } 
+    const MoveDown = ()=>{
+        if(!(direction == "up")){
+            game.snake.vx = 0
+            game.snake.vy = game.snake.vel
+        }
+        direction = "down"
+    }
+
+    const keyPush = (e)=>{
             switch (e.keyCode) {
                 case 37:  //left
-                    if(!(direction == "right")) {
-                        game.snake.vx = - game.snake.vel
-                        game.snake.vy = 0
-                        
-                    }
-                    direction = "left"
+                    MoveLeft()
                     break;
 
                 case 38:  //up
-                    if(!(direction == "down")){
-                        game.snake.vx = 0
-                        game.snake.vy = - game.snake.vel
-                    }
-                    direction = "up"
+                    MoveUp()
                     break;
 
                 case 39:  //right
-                    if(!(direction == "left")) {
-                        game.snake.vx =  game.snake.vel
-                        game.snake.vy = 0 
-                    }
-                    direction = "right"
-                
+                    MoveRight()
                     break;
 
                 case 40:  //down
-                    if(!(direction == "up")){
-                        game.snake.vx = 0
-                        game.snake.vy = game.snake.vel
-                    }
-                    direction = "down"
+                    MoveDown()
                     break; 
 
                 default:
                 break;
             }
-        }
+    }
+
         
 document.addEventListener('keydown',keyPush)
+buttonUp.addEventListener("click",MoveUp)
+buttonDown.addEventListener("click",MoveDown)
+buttonLeft.addEventListener("click",MoveLeft)
+buttonRight.addEventListener("click",MoveRight)
+
 setInterval(()=>{
         game.Start()     
 },80)
