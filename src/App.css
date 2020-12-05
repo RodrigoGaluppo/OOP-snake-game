@@ -1,0 +1,109 @@
+*{
+  padding:0;
+  margin:0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  font-weight: 500;
+}
+body,html{
+  height: 100%;
+  background:#ddd;
+}
+.container{
+  max-width: 1280px;
+  padding:0 2%;
+  margin :0 auto;
+  max-height: 100vh;
+}
+.wn{
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%)
+}
+.wn canvas{
+  border:5px solid #aaa;
+}
+
+.infoScore{
+  position: absolute;
+  left: 30px;
+  max-width: 180px;
+  background-color: #e67300;
+  padding: 10px 2%;
+  color: #eee;
+  margin-bottom: 2%;
+}
+.infoHighScore{
+  position: absolute;
+  right: 30px;
+  max-width: 180px;
+  background-color: #e67300;
+  padding: 10px 2%;
+  color: #eee;
+  margin-bottom: 2%;
+}
+
+.joystick{
+  height: 30vh;
+  padding: 0 4%;
+  width: 100%; 
+  position: absolute;
+  top:98%;
+  left:50%;
+  transform:translate(-50%,-98%);
+  display: none;
+}
+.buttons{
+  margin: 0 auto;
+  height: 100%;
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.ButtonLine{
+  width: 33.3%;
+  display: flex;
+}
+#TrueButton{
+  text-align: center;
+}
+.control{
+  background-color: #e67300;
+  outline: 0;
+  border:0;
+  width: 100%;
+  height: 100%;
+  color:white;
+}
+.control:active{
+  background-color: #f88c20;
+  outline: 0;
+  border:0;
+  width: 100%;
+  height: 100%;
+  color:white;
+}
+
+@media screen and (max-width:550px){
+  .wn{
+      position: absolute;
+      top:8vh;
+      left:50%;
+      transform:translate(-50%,0)
+  }
+  .joystick{
+      display: block;
+  }
+  .buttons{
+      height: calc(100% - 200);
+  }
+}
+@media screen and (max-width:220px){
+  .infoHighScore{
+      right: 10px;
+  }
+  .infoScore{
+      left: 10px;
+  }
+}
