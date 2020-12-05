@@ -87,6 +87,9 @@ body,html{
 }
 
 @media screen and (max-width:550px){
+  .infoHighScore{
+      display:none;
+  }
   .wn{
       position: absolute;
       top:8vh;
@@ -103,6 +106,7 @@ body,html{
 @media screen and (max-width:220px){
   .infoHighScore{
       right: 10px;
+
   }
   .infoScore{
       left: 10px;
