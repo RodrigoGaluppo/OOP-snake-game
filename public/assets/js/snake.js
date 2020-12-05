@@ -27,7 +27,7 @@ const buttonRight = document.querySelector('#right')
 
 const scoreHtml = document.querySelector('#score')
 const HighscoreHtml = document.querySelector('#highscore')
-let Highscore = localStorage.getItem("@SnakeGame-HighScore")
+let Highscore = JSON.parse(localStorage.getItem("@SnakeGame-HighScore"))
 let direction
 
 // game functions
@@ -35,7 +35,7 @@ let direction
 const UpdateScore = (NewScore)=>{
     scoreHtml.innerText = `score ${NewScore}`
     if(NewScore > Number(Highscore)){
-        localStorage.setItem("@SnakeGame-HighScore",NewScore)
+        localStorage.setItem("@SnakeGame-HighScore",JSON.stringify(NewScore))
         HighscoreHtml.innerHTML=`highscore ${NewScore}`
     }else{
         HighscoreHtml.innerHTML=`highscore ${Highscore}`
@@ -190,7 +190,7 @@ class Game{
 const game = new Game()
 
 window.onload = ()=>{
-    Highscore = !!(localStorage.getItem("@SnakeGame-HighScore")) ? localStorage.getItem("@SnakeGame-HighScore") : "0"
+    Highscore = !!(localStorage.getItem("@SnakeGame-HighScore")) ? JSON.parse(localStorage.getItem("@SnakeGame-HighScore")) : "0"
 
     UpdateScore(game.snake.trail.length.toString()) 
 
