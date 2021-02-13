@@ -1,4 +1,3 @@
-
 // Base Variables and Consts
 // ResponsibleHeigth
 let HEIGTH =  window.innerHeight - 50
@@ -6,9 +5,12 @@ if(window.innerWidth > 768){
      HEIGTH =  window.innerHeight - 50 
 }else if(window.innerWidth > 550){
      HEIGTH =  window.innerHeight - 100
-}else{
+}
+else{
      HEIGTH = window.innerHeight < 500 ? window.innerHeight - 200 : window.innerHeight - 300
 }
+
+
 
 let WIDTH =  window.innerWidth - 400
 if(window.innerWidth > 768){
@@ -16,8 +18,21 @@ if(window.innerWidth > 768){
 }else if(window.innerWidth > 550){
     WIDTH =  window.innerWidth - 50
 }else{
-    WIDTH =  window.innerWidth - 30
+    WIDTH =  window.innerWidth - 40
 }
+
+if(window.innerHeight > 800 ){
+    HEIGTH =  window.innerHeight - 500
+    console.log("here");
+}else {
+    if(window.innerHeight > 650 ){
+        HEIGTH =  window.innerHeight - 400
+        console.log("here");
+    }
+}
+
+
+
 
 const All = document.querySelector('body')
 const buttonUp = document.querySelector('#up')
@@ -30,16 +45,18 @@ const HighscoreHtml = document.querySelector('#highscore')
 let Highscore = JSON.parse(localStorage.getItem("@SnakeGame-HighScore"))
 let direction
 
+let Moving
+
 // game functions
 
 const UpdateScore = (NewScore)=>{
     scoreHtml.innerText = `score ${NewScore}`
+    
     if(NewScore > Number(Highscore)){
         localStorage.setItem("@SnakeGame-HighScore",JSON.stringify(NewScore))
-        HighscoreHtml.innerHTML=`highscore ${NewScore}`
-    }else{
-        HighscoreHtml.innerHTML=`highscore ${Highscore}`
+        Highscore = NewScore  
     }
+    HighscoreHtml.innerHTML=`highscore ${Highscore}`
 }
 
 const GenerateRandomPOSITION = ()=>{
@@ -86,7 +103,7 @@ class Snake{
 
             // body
             this.trail = []
-            this.tail = 3
+            this.tail = 1
         }
 }
 
@@ -135,7 +152,7 @@ class Game{
                 this.snake.px = 0
             }
 
-            if(this.snake.py < -1){
+            if(this.snake.py < 0){
                 this.snake.py = this.wn.maxY
             }
 
@@ -150,19 +167,23 @@ class Game{
             this.wn.ctx.fillStyle='#e67300'
             this.wn.ctx.fillRect(this.apple.ax * this.wn.lp, this.apple.ay * this.wn.lp , this.wn.lp , this.wn.lp)
             this.wn.ctx.fillStyle = '#264d73'
-
+            
             for(let i = 0; i < this.snake.trail.length; i++ ){
+                
                 this.wn.ctx.fillRect(this.snake.trail[i].x * this.wn.lp, this.snake.trail[i].y * this.wn.lp, this.wn.lp , this.wn.lp)    
                 if( this.snake.trail[i].x == this.snake.px && this.snake.trail[i].y == this.snake.py){
-                    this.snake.vx = this.snake.vy = 0
-                    this.snake.tail=2
+                    if(Moving){
+                        this.snake.vx = this.snake.vy = 0
+                        this.snake.tail=1
+                        UpdateScore(0)  
+                    }
                 }
             }
             this.snake.trail.push({x:this.snake.px,y:this.snake.py})
-            
             while(this.snake.trail.length > this.snake.tail ){
                 this.snake.trail.shift()
             }
+            
         }
 
 
@@ -179,7 +200,7 @@ class Game{
                 while(this.apple.ax < 0 || this.apple.ax > this.wn.maxX || 
                     this.apple.ay < 0 || this.apple.ay > this.wn.maxY)
 
-                UpdateScore((this.snake.trail.length - 1).toString())
+                UpdateScore((this.snake.trail.length).toString())
                 
             }
         }
@@ -198,34 +219,34 @@ window.onload = ()=>{
         if(!(direction == "left")) {
             game.snake.vx =  game.snake.vel
             game.snake.vy = 0 
+            direction = "right"
         }
-        direction = "right"
     }
     const MoveLeft = ()=>{
         if(!(direction == "right")) {
             game.snake.vx = - game.snake.vel
             game.snake.vy = 0
-            
+            direction = "left"
         }
-        direction = "left"
     }
 
     const MoveUp = ()=>{
         if(!(direction == "down")){
             game.snake.vx = 0
             game.snake.vy = - game.snake.vel
+            direction = "up"
         }
-        direction = "up"
     } 
     const MoveDown = ()=>{
         if(!(direction == "up")){
             game.snake.vx = 0
             game.snake.vy = game.snake.vel
+            direction = "down"
         }
-        direction = "down"
     }
 
     const keyPush = (e)=>{
+            Moving=true
             switch (e.keyCode) {
                 case 37:  //left
                     MoveLeft()
