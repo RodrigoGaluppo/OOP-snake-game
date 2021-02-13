@@ -21,11 +21,11 @@ if(window.innerWidth > 768){
     WIDTH =  window.innerWidth - 40
 }
 
-if(window.innerHeight > 800 ){
+if(window.innerHeight > 800 && window.innerWidth < 300 ){
     HEIGTH =  window.innerHeight - 500
     console.log("here");
 }else {
-    if(window.innerHeight > 650 ){
+    if(window.innerHeight > 650 && window.innerWidth < 300){
         HEIGTH =  window.innerHeight - 400
         console.log("here");
     }
@@ -172,11 +172,9 @@ class Game{
                 
                 this.wn.ctx.fillRect(this.snake.trail[i].x * this.wn.lp, this.snake.trail[i].y * this.wn.lp, this.wn.lp , this.wn.lp)    
                 if( this.snake.trail[i].x == this.snake.px && this.snake.trail[i].y == this.snake.py){
-                    if(Moving){
-                        this.snake.vx = this.snake.vy = 0
-                        this.snake.tail=1
-                        UpdateScore(0)  
-                    }
+                    this.snake.vx = this.snake.vy = 0
+                    this.snake.tail=1
+                    UpdateScore(0)         
                 }
             }
             this.snake.trail.push({x:this.snake.px,y:this.snake.py})
